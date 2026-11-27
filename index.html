@@ -157,18 +157,56 @@ h2.title {
   content: ""; flex: none; width: 22px; height: 22px; margin-top: .15rem; border-radius: 50%;
   background: var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/13px no-repeat;
 }
-.about-collage { position: relative; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 1rem; aspect-ratio: 1 / 1; }
-.about-collage div { border-radius: var(--radius); background-color: var(--navy); background-size: cover; background-position: center; box-shadow: var(--shadow); }
-.about-collage div:nth-child(1) { grid-row: span 2; background-image: var(--img-marine); }
-.about-collage div:nth-child(2) { background-image: var(--img-mining); }
-.about-collage div:nth-child(3) { background-image: var(--img-aviation); }
-.about-badge {
-  position: absolute; left: -1.5rem; bottom: 1.5rem;
-  background: var(--navy); color: var(--white); border-radius: var(--radius);
-  padding: 1.1rem 1.4rem; box-shadow: var(--shadow); border-left: 4px solid var(--accent);
+.about-visual {
+  position: relative; overflow: hidden; isolation: isolate;
+  background-color: var(--navy);
+  background-image:
+    linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px),
+    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+  background-size: 60px 60px, 60px 60px, 12px 12px, 12px 12px;
+  border-radius: calc(var(--radius) + 4px); box-shadow: var(--shadow);
+  padding: clamp(2rem, 4vw, 2.75rem); color: var(--white);
 }
-.about-badge strong { display: block; font: 500 2rem/1 var(--serif); }
-.about-badge span { font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; opacity: .8; }
+.about-visual::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(circle at 85% 10%, rgba(196,43,10,.35), transparent 55%);
+}
+.gear {
+  position: absolute; z-index: -1; color: rgba(255,255,255,.08); pointer-events: none;
+  animation: spin 40s linear infinite;
+}
+.gear.big { width: 300px; height: 300px; right: -90px; top: -90px; }
+.gear.small { width: 140px; height: 140px; right: 150px; top: 120px; color: rgba(255,138,102,.14); animation-direction: reverse; animation-duration: 25s; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.visual-head { display: flex; flex-direction: column; gap: .7rem; margin-bottom: 1.75rem; }
+.visual-head small { font: 600 .75rem/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: #ff8a66; }
+.visual-head strong { font: 500 clamp(2.2rem, 4vw, 3rem)/1 var(--serif); white-space: nowrap; }
+.sector-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .9rem; }
+.sector {
+  display: flex; align-items: center; gap: 1.1rem;
+  padding: 1rem 1.15rem; border-radius: var(--radius);
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
+  backdrop-filter: blur(3px);
+  transition: transform .3s, background .3s, border-color .3s;
+}
+.sector:hover { transform: translateX(6px); background: rgba(255,255,255,.1); border-color: rgba(255,138,102,.55); }
+.sector-icon {
+  flex: none; width: 54px; height: 54px; border-radius: 12px; display: grid; place-items: center;
+  background: linear-gradient(135deg, var(--accent), #8a1d05); color: var(--white);
+}
+.sector-icon svg { width: 28px; height: 28px; }
+.sector h3 { font: 500 1.35rem/1.15 var(--serif); margin: 0; }
+.sector p { margin: .15rem 0 0; font-size: .88rem; color: rgba(255,255,255,.65); }
+.sector-num { margin-left: auto; font: 600 .78rem/1 var(--sans); letter-spacing: .16em; color: rgba(255,255,255,.35); }
+.visual-foot {
+  display: flex; flex-wrap: wrap; gap: .6rem 1.5rem; margin-top: 1.75rem; padding-top: 1.25rem;
+  border-top: 1px dashed rgba(255,255,255,.2);
+  font: 500 .82rem/1.4 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: rgba(255,255,255,.7);
+}
+.visual-foot span { display: inline-flex; align-items: center; gap: .5rem; }
+.visual-foot span::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent-soft); }
 
 /* ---------- Services ---------- */
 .services-section { background: var(--panel); }
@@ -201,10 +239,10 @@ h2.title {
 .service-line { display: block; width: 44px; height: 3px; background: var(--accent); margin-top: 1rem; transition: width .4s; }
 .service:hover .service-line { width: 90px; }
 
-/* ---------- History & Leadership headings ---------- */
-#history .section-head, #leadership .section-head, #services .section-head { margin-bottom: clamp(3.5rem, 7vw, 5rem); }
-#history .eyebrow, #leadership .eyebrow, #services .eyebrow { margin-bottom: 1.5rem; }
-#history .title, #leadership .title { margin-bottom: 0; }
+/* ---------- Section headings ---------- */
+#history .section-head, #services .section-head { margin-bottom: clamp(3.5rem, 7vw, 5rem); }
+#history .eyebrow, #services .eyebrow { margin-bottom: 1.5rem; }
+#history .title { margin-bottom: 0; }
 
 /* ---------- History ---------- */
 .timeline { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0; position: relative; }
@@ -226,30 +264,6 @@ h2.title {
 .timeline .card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
 .timeline .card h3 { font: 600 1rem/1.4 var(--sans); color: var(--ink); margin: 0 0 .4rem; }
 .timeline .card p { margin: 0; }
-
-/* ---------- Leadership ---------- */
-.leadership-section { background: var(--navy); color: rgba(255,255,255,.82); position: relative; overflow: hidden; }
-.leadership-section::before {
-  content: ""; position: absolute; right: -10%; top: -30%; width: 55%; aspect-ratio: 1;
-  background: radial-gradient(circle, rgba(196,43,10,.25), transparent 65%); pointer-events: none;
-}
-.leadership-section .title { color: var(--white); }
-.leadership-section .eyebrow { color: #ff8a66; }
-.directors { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; position: relative; }
-.director {
-  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12);
-  border-radius: var(--radius); padding: 1.75rem 1.5rem;
-  transition: background .3s, transform .3s, border-color .3s;
-}
-.director:hover { background: rgba(255,255,255,.09); transform: translateY(-4px); border-color: rgba(255,138,102,.5); }
-.avatar {
-  width: 64px; height: 64px; border-radius: 50%;
-  display: grid; place-items: center; margin-bottom: 1.25rem;
-  background: linear-gradient(135deg, var(--accent), #8a1d05);
-  font: 500 1.4rem/1 var(--serif); color: var(--white); letter-spacing: .02em;
-}
-.director h3 { font: 500 1.5rem/1.2 var(--serif); color: var(--white); margin: 0 0 .25rem; }
-.director span { font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.55); }
 
 /* ---------- Contact ---------- */
 .contact-wrap {
@@ -309,10 +323,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 @media (max-width: 960px) {
   .services { grid-template-columns: 1fr 1fr; }
   .services li:last-child { grid-column: span 2; aspect-ratio: 16 / 9; }
-  .directors { grid-template-columns: 1fr 1fr; }
   .about-grid { grid-template-columns: 1fr; }
-  .about-collage { max-width: 34rem; }
-  .about-badge { left: 1rem; }
+  .about-visual { max-width: 36rem; }
   .contact-wrap { grid-template-columns: 1fr; }
   .contact-form-panel { border-left: 0; border-top: 1px solid var(--line); }
 }
@@ -343,12 +355,11 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
   .services { grid-template-columns: 1fr; }
   .services li:last-child { grid-column: auto; aspect-ratio: 3 / 4; }
   .service p { max-height: 8rem; opacity: 1; margin-top: .25rem; }
-  .directors { grid-template-columns: 1fr; }
-  .about-collage { aspect-ratio: 4 / 5; }
+  .sector-num { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .hero-slides div { animation: none; }
+  .hero-slides div, .gear { animation: none; }
   .hero-slides div:nth-child(1) { opacity: 1; transform: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
   * { transition: none !important; }
@@ -369,7 +380,6 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
       <a href="#about">About</a>
       <a href="#services">Services</a>
       <a href="#history">History</a>
-      <a href="#leadership">Leadership</a>
       <a class="btn" href="#contact">Contact us</a>
     </nav>
   </div>
@@ -415,9 +425,35 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
           <li>Headquartered in Mumbai, India</li>
         </ul>
       </div>
-      <div class="about-collage reveal" aria-hidden="true">
-        <div></div><div></div><div></div>
-        <div class="about-badge"><strong>Since 1982</strong><span>Mumbai, India</span></div>
+      <div class="about-visual reveal">
+        <span class="gear big"><svg viewBox="0 0 100 100" fill="currentColor" aria-hidden="true"><path d="M43 2h14l2 12a37 37 0 0 1 9 4l10-7 10 10-7 10a37 37 0 0 1 4 9l12 2v14l-12 2a37 37 0 0 1-4 9l7 10-10 10-10-7a37 37 0 0 1-9 4l-2 12H43l-2-12a37 37 0 0 1-9-4l-10 7-10-10 7-10a37 37 0 0 1-4-9L3 57V43l12-2a37 37 0 0 1 4-9l-7-10 10-10 10 7a37 37 0 0 1 9-4zM50 32a18 18 0 1 0 0 36 18 18 0 0 0 0-36z"/></svg></span>
+        <span class="gear small"><svg viewBox="0 0 100 100" fill="currentColor" aria-hidden="true"><path d="M43 2h14l2 12a37 37 0 0 1 9 4l10-7 10 10-7 10a37 37 0 0 1 4 9l12 2v14l-12 2a37 37 0 0 1-4 9l7 10-10 10-10-7a37 37 0 0 1-9 4l-2 12H43l-2-12a37 37 0 0 1-9-4l-10 7-10-10 7-10a37 37 0 0 1-4-9L3 57V43l12-2a37 37 0 0 1 4-9l-7-10 10-10 10 7a37 37 0 0 1 9-4zM50 32a18 18 0 1 0 0 36 18 18 0 0 0 0-36z"/></svg></span>
+        <div class="visual-head">
+          <small>Industries we serve</small>
+          <strong>Since 1982</strong>
+        </div>
+        <ul class="sector-list">
+          <li class="sector">
+            <span class="sector-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15l2 4h14l2-4H3z"/><path d="M6 15V9h12v6"/><path d="M12 9V4M9 6h6"/><path d="M2 21c2 0 2-1 4-1s2 1 4 1 2-1 4-1 2 1 4 1 2-1 4-1"/></svg></span>
+            <div><h3>Marine</h3><p>Engineering services for the marine industry</p></div>
+            <span class="sector-num">01</span>
+          </li>
+          <li class="sector">
+            <span class="sector-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16h13V9H8l-3 4H2z"/><path d="M15 12h3l3 4h-6"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M10 9V6l5-2"/></svg></span>
+            <div><h3>Mining</h3><p>Engineering services for the mining industry</p></div>
+            <span class="sector-num">02</span>
+          </li>
+          <li class="sector">
+            <span class="sector-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg></span>
+            <div><h3>Aviation</h3><p>Engineering services for the aviation industry</p></div>
+            <span class="sector-num">03</span>
+          </li>
+        </ul>
+        <div class="visual-foot">
+          <span>Partnership firm · 1982</span>
+          <span>Private limited · 2024</span>
+          <span>Mumbai, India</span>
+        </div>
       </div>
     </div>
   </section>
@@ -484,22 +520,6 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
           </div>
         </li>
       </ol>
-    </div>
-  </section>
-
-  <!-- LEADERSHIP -->
-  <section class="section leadership-section" id="leadership">
-    <div class="container">
-      <div class="section-head reveal">
-        <p class="eyebrow">Leadership</p>
-        <h2 class="title">Our directors.</h2>
-      </div>
-      <ul class="directors">
-        <li class="director reveal"><div class="avatar" aria-hidden="true">MZ</div><h3>Milan Zatakia</h3><span>Director</span></li>
-        <li class="director reveal"><div class="avatar" aria-hidden="true">MZ</div><h3>Meenal Zatakia</h3><span>Director</span></li>
-        <li class="director reveal"><div class="avatar" aria-hidden="true">MZ</div><h3>Mihir Zatakia</h3><span>Director</span></li>
-        <li class="director reveal"><div class="avatar" aria-hidden="true">MZ</div><h3>Mythili Zatakia</h3><span>Director</span></li>
-      </ul>
     </div>
   </section>
 
@@ -578,8 +598,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
         <a href="#about">About</a>
         <a href="#services">Services</a>
         <a href="#history">History</a>
-        <a href="#leadership">Leadership</a>
-        <a href="#contact">Contact</a>
+          <a href="#contact">Contact</a>
       </nav>
     </div>
     <div class="footer-bottom">
